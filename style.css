@@ -1,0 +1,125 @@
+:root {
+    --primary-font: 'Montserrat', sans-serif;
+    --text-color: #ffffff;
+    --background-color: #050818;
+    --accent-color: #00e5ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+.logo {
+    height: 100px;
+}
+
+body {
+    font-family: var(--primary-font);
+    background-color: var(--background-color);
+    /* O FUNDO PRINCIPAL AGORA ESTÁ NO BODY */
+    background-image: url('assets/background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+/* Animações de fundo (Canvas e Setas) */
+#neural-connections {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Camada 1: Conexões Neurais */
+}
+
+.arrows-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2; /* Camada 2: Setas subindo */
+    overflow: hidden;
+}
+
+.arrow {
+    position: absolute;
+    bottom: -100px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 60px solid rgba(255, 255, 255, 0.15); /* Opacidade levemente aumentada para melhor visibilidade */
+    animation: rise linear infinite;
+}
+
+@keyframes rise {
+    to { transform: translateY(-120vh); }
+}
+
+/* Distribuição e Variação das Setas */
+.arrow:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; }
+.arrow:nth-child(2) { left: 20%; animation-duration: 12s; animation-delay: 1s; opacity: 0.5; }
+.arrow:nth-child(3) { left: 35%; animation-duration: 18s; animation-delay: 3s; }
+.arrow:nth-child(4) { left: 50%; animation-duration: 10s; animation-delay: 0s; opacity: 0.7; }
+.arrow:nth-child(5) { left: 65%; animation-duration: 16s; animation-delay: 5s; }
+.arrow:nth-child(6) { left: 75%; animation-duration: 11s; animation-delay: 2s; opacity: 0.6; }
+.arrow:nth-child(7) { left: 85%; animation-duration: 20s; animation-delay: 6s; }
+.arrow:nth-child(8) { left: 95%; animation-duration: 13s; animation-delay: 4s; opacity: 0.8; }
+
+
+/* Wrapper para todo o conteúdo visível */
+.content-wrapper {
+    position: relative;
+    z-index: 3; /* Camada 3: Conteúdo Principal */
+    /* REMOVIDO O BACKGROUND DAQUI PARA PERMITIR VISUALIZAÇÃO DAS CAMADAS INFERIORES */
+}
+
+/* Loader */
+.loader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--background-color); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.8s ease, visibility 0.8s ease; }
+.loader img { width: 150px; animation: pulse 1.5s infinite ease-in-out; }
+.loader.hidden { opacity: 0; visibility: hidden; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+/* Animações de Entrada */
+.hidden { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+.show { opacity: 1; transform: translateY(0); }
+
+/* Header (agora não é mais fixo) */
+header { padding: 40px 50px;
+         display: flex;
+         justify-content: center;   
+        }
+.logo img { width: clamp(200px, 30vw, 250px); }
+
+/* Conteúdo Principal */
+main { padding: 0 50px; }
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.hero h1 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; line-height: 1.1; overflow: hidden; padding: 5px 0; }
+.ml-line { display: inline-block; transform: translateY(100%); animation: reveal-text 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero h1:nth-of-type(1) .ml-line { animation-delay: 1s; }
+.hero h1:nth-of-type(2) .ml-line { animation-delay: 1.2s; }
+@keyframes reveal-text { to { transform: translateY(0); } }
+
+.schedule { padding: 100px 0; }
+.schedule h2 { text-align: center; font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 60px; }
+.day-container { display: grid; grid-template-columns: 1fr; gap: 30px; }
+.day { background: rgba(10, 10, 30, 0.7); /* Fundo um pouco mais opaco para legibilidade */ backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 30px; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+.day:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(0, 229, 255, 0.2); }
+.day h3 { font-size: clamp(1.8rem, 4vw, 2.5rem); color: var(--accent-color); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--accent-color); }
+.day ul { list-style: none; }
+.day li { font-size: clamp(1rem, 2.5vw, 1.2rem); margin-bottom: 15px; }
+
+/* Rodapé com Logo Principal */
+footer { padding: 100px 20px; text-align: center; }
+.logo-conexao-container { display: inline-block; position: relative; }
+.logo-conexao { width: clamp(150px, 30vw, 250px); animation: float 4s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header, main { padding: 20px; }
+    header { padding-top: 30px; }
+}
