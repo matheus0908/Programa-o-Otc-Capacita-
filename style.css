@@ -248,7 +248,7 @@ h1 {
 }
 
 /* --- RESPONSIVIDADE --- */
-@media (max-width: 740px) {
+@media (max-width: 765px) {
     header { padding: 15px 0; }
     .header-container { flex-direction: column; gap: 20px; }
     main { padding-top: 180px; }
@@ -279,6 +279,7 @@ h1 {
 .event-card.break h3 i {
     color: #8b949e;
 }
+
 
 
 
