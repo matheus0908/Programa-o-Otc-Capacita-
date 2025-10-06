@@ -254,6 +254,12 @@ h1 {
     main { padding-top: 180px; }
     h1 { font-size: 2.5em; }
 }
+/* --- ADICIONAR ESTA REGRA NOVA --- */
+nav {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    width: 100%;
+}
 
 /* --- ADICIONAR ESTE TRECHO NO FINAL DO SEU CSS --- */
 
@@ -279,6 +285,7 @@ h1 {
 .event-card.break h3 i {
     color: #8b949e;
 }
+
 
 
 
