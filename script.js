@@ -1,136 +1,79 @@
-// --- LOADER COM ANIMAÇÃO DE ENTRADA GARANTIDA ---
-window.addEventListener('load', () => {
-    const loader = document.querySelector('.loader');
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Seletores ---
+    const navButtons = document.querySelectorAll('.nav-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const dayTabs = document.querySelectorAll('.day-tab');
+    const dayContentPanels = document.querySelectorAll('.day-content');
 
-    // Garante que o loader fique visível por pelo menos 1.5 segundos (1500ms)
-    // para que a animação seja apreciada, criando um efeito de introdução.
-    setTimeout(() => {
-        loader.classList.add('hidden');
-    }, 1500); // Delay de 1.5 segundos
-});
-
-// --- ANIMAÇÃO DE SCROLL ---
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-        }
+    // --- Abas Principais ---
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => setActiveTab(button.dataset.tab));
     });
-}, { threshold: 0.1 });
 
-const hiddenElements = document.querySelectorAll('.hidden');
-hiddenElements.forEach((el) => observer.observe(el));
-
-// --- ANIMAÇÃO DAS CONEXÕES NEURAIS (CANVAS) ---
-const canvas = document.getElementById('neural-connections');
-const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particlesArray;
-
-// Posição do mouse
-const mouse = {
-    x: null,
-    y: null,
-    radius: (canvas.height / 120) * (canvas.width / 120)
-};
-
-window.addEventListener('mousemove', (event) => {
-    mouse.x = event.x;
-    mouse.y = event.y;
-});
-
-// Classe da Partícula
-class Particle {
-    constructor(x, y, directionX, directionY, size, color) {
-        this.x = x;
-        this.y = y;
-        this.directionX = directionX;
-        this.directionY = directionY;
-        this.size = size;
-        this.color = color;
+    function setActiveTab(tabId) {
+        navButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tabId));
+        tabContents.forEach(content => content.classList.toggle('active', content.id === tabId));
     }
 
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
-        ctx.fill();
+    // --- LÓGICA DO CRONOGRAMA ---
+    dayTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            setActiveDayPanel(tab.dataset.targetId);
+        });
+    });
+
+    function setActiveDayPanel(targetId) {
+        dayTabs.forEach(t => t.classList.remove('active'));
+        dayContentPanels.forEach(c => c.classList.remove('active'));
+
+        const targetButton = document.querySelector(`.day-tab[data-target-id='${targetId}']`);
+        const targetPanel = document.getElementById(targetId);
+
+        if (targetButton && targetPanel) {
+            targetButton.classList.add('active');
+            targetPanel.classList.add('active');
+        }
     }
 
-    update() {
-        if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
-        if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
-        
-        this.x += this.directionX;
-        this.y += this.directionY;
-        this.draw();
-    }
-}
+    // --- FUNÇÃO DE AUTOMAÇÃO (SILENCIOSA) ---
+    function initializeSchedule() {
+        // 1. Pega a data do computador.
+        const hoje = new Date();
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const dia = String(hoje.getDate()).padStart(2, '0');
+        const hojeFormatado = `${ano}-${mes}-${dia}`;
 
-// Criar array de partículas
-function init() {
-    particlesArray = [];
-    let numberOfParticles = (canvas.height * canvas.width) / 9000;
-    for (let i = 0; i < numberOfParticles; i++) {
-        let size = (Math.random() * 2) + 1;
-        let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-        let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-        let directionX = (Math.random() * 0.4) - 0.2;
-        let directionY = (Math.random() * 0.4) - 0.2;
-        let color = 'rgba(0, 229, 255, 0.5)';
-        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-    }
-}
+        // 2. Verificação interna (visível no console F12)
+        console.log(`Data detectada pelo relógio do computador: ${hojeFormatado}`);
 
-// Animar as partículas
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
-
-    for (let i = 0; i < particlesArray.length; i++) {
-        particlesArray[i].update();
-    }
-    connect();
-}
-
-// Desenhar as conexões
-function connect() {
-    let opacityValue = 1;
-    for (let a = 0; a < particlesArray.length; a++) {
-        for (let b = a; b < particlesArray.length; b++) {
-            let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
-                ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-            
-            if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                opacityValue = 1 - (distance / 20000);
-                ctx.strokeStyle = `rgba(0, 229, 255, ${opacityValue})`;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                ctx.stroke();
+        let matchFound = false;
+        if (dayTabs.length > 0) {
+            // 3. Procura um botão com a data de hoje
+            for (const tab of dayTabs) {
+                const tabDate = tab.dataset.date.trim();
+                if (tabDate === hojeFormatado) {
+                    // 4. Se encontrar, ativa o painel correto
+                    setActiveDayPanel(tab.dataset.targetId);
+                    tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    matchFound = true;
+                    // Verificação interna (visível no console F12)
+                    console.log(`Match encontrado! O botão com data "${tabDate}" foi ativado.`);
+                    break;
+                }
+            }
+            // 5. Se não encontrar, ativa o primeiro da lista
+            if (!matchFound) {
+                setActiveDayPanel(dayTabs[0].dataset.targetId);
+                // Verificação interna (visível no console F12)
+                console.log(`Não foi encontrado nenhum evento para a data de hoje. O primeiro dia da lista foi ativado como padrão.`);
             }
         }
     }
-}
 
+    // --- INICIALIZAÇÃO ---
+    initializeSchedule();
 
-// Evento de redimensionar a janela
-window.addEventListener('resize', () => {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-    mouse.radius = (canvas.height / 120) * (canvas.width / 120);
-    init();
+    // --- particles.js (completo, sem alterações) ---
+    particlesJS('particles-js', { "particles": { "number": { "value": 60, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#4285F4" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4285F4", "opacity": 0.2, "width": 1 }, "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false } }, "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } } } }, "retina_detect": true });
 });
-
-// Sair com o mouse da tela
-window.addEventListener('mouseout', () => {
-    mouse.x = undefined;
-    mouse.y = undefined;
-});
-
-init();
-animate();
