@@ -3,121 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTC CAPACITA - Mais que comandar é preciso se conectar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <title>OTC Capacita - A Elite da Programação</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 </head>
 <body>
-    <div class="loader">
-        <img src="assets/logo-conexao.png" alt="Carregando...">
-    </div>
 
-    <canvas id="neural-connections"></canvas>
+    <div id="particles-js"></div>
+    <div class="glow-effect"></div>
 
-    <div class="arrows-background">
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-        <div class="arrow"></div>
-    </div>
-
-    <div class="content-wrapper">
-        <header class="hidden">
-            <div class="logo">
-                <img src="assets/logo-otc.png" alt="Logo OTC">
+    <header>
+        <div class="header-container">
+            <div class="logos">
+                <img src="logo-sua-empresa.png" alt="Logo da Sua Empresa" class="logo-principal">
+                <img src="logo-otc-capacita.png" alt="Logo OTC Capacita" class="logo-treinamento">
             </div>
-        </header>
+            <nav>
+                <button class="nav-button active" data-tab="programacao">Programação</button>
+                <button class="nav-button" data-tab="informacoes">Mais Informações</button>
+            </nav>
+        </div>
+    </header>
 
-        <main>
-            <section class="hero hidden">
-                <h1 class="ml-line">OTC CAPACITA</h1>
-                <h1 class="ml-line">Mais que comandar</h1>
-                <h1 class="ml-line">é preciso se conectar</h1>
-            </section>
+    <main>
+        <section id="programacao" class="tab-content active">
+            <div class="container">
+                <h1>Programação Oficial</h1>
+                <p class="subtitle">Conectando mentes e códigos para o futuro.</p>
 
-            <section class="schedule">
-                <h2 class="hidden">Programação</h2>
-                <div class="day-container">
-                    <div class="day hidden">
-                        <h3>(Dia 1) Terça-Feira 02/12/2025 </h3>
-                        <ul>
-                            <li><strong>12h00-14h00:</strong> Almoço Hotel</li>
-                            <li><strong>15h00-16h00:</strong> Abertura do Treinamento</li>
-                            <li><strong>16h00-17h00:</strong> Dinâmica de Boas-Vindas</li>
-                            <li><strong>17h00-17h30:</strong> Dinâmica Especial</li>
-                            <li><strong>19h00-21h00:</strong> Jantar</li>
-                        </ul>
+                <div class="schedule-menu-wrapper">
+                    <div class="schedule-menu">
+                        <button class="day-tab" data-target-id="painel-dia-1" data-date="2025-10-06">Dia 1 <span>(05/10)</span></button>
+                        <button class="day-tab" data-target-id="painel-dia-2" data-date="2025-10-07">Dia 2 <span>(06/10)</span></button>
+                        <button class="day-tab" data-target-id="painel-dia-7" data-date="2025-12-04">Dia 7 <span>(04/12)</span></button>
                     </div>
-                    <div class="day hidden">
-                        <h3>(Dia 2) Quarta-Feira 03/12/2025</h3>
-                        <ul>
-                            <li><strong>08h00-10h45 Apresentação:</strong> Conhecendo a OTC - Paulo/Leticia</li>
-                            <li><strong>10h45-11h00:</strong> Coffe Break</li>
-                            <li><strong>11h00-12h30:</strong> Continuação de Conhecendo a OTC - Paulo/Leticia </li>
-                            <li><strong>12h30-14h00</strong> Almoço</li>
-                            <li><strong>14h00-15h30 Apresentação:</strong> Noções de Departamento Pessoal - Silvana/Luciana </li>
-                            <li><strong>15h30-16h00:</strong> Coffe Break</li>
-                            <li><strong>16h00-17h00 Apresentação:</strong> Comunicação Assertiva - (Colocar nome) </li>
-                            <li><strong>19h00-21h00:</strong> Jantar</li>
-                        </ul>
-                    </div>
-                    <div class="day hidden">
-                        <h3>(Dia 3) Quinta-Feira 03/12/2025</h3>
-                        <ul>
-                            <li><strong>08h00-10h00 Apresentação:</strong> Planejamento Adriana/Leila</li>
-                            <li><strong>10h00-10h15</strong> Coffe Break</li>
-                            <li><strong>10h15-11h00:</strong> Dinâmica: Planejamento - Silvana</li>
-                            <li><strong>11h00-12h30 Apresentação:</strong> Boas Práticas de Produção - Luis/Priscilla</li>
-                            <li><strong>12h30-14h00:</strong> Almoço</li>
-                            <li><strong>14h00-15h45 Apresentação:</strong> Noções Básicas de Tecnologia - Matheus/Rafael</li>
-                            <li><strong>15h45-16h00:</strong> Coffe Break</li>
-                            <li><strong>16h00-17h30 Apresentação:</strong> Controle de Qualidade (Exemplos) -  Brenno</li>
-                            <li><strong>19h00-21h00:</strong> Jantar</li>
-                        </ul>
-                    </div>
-                    <div class="day hidden">
-                        <h3>(Dia 4) Sexta-Feira 05/12/2025</h3>
-                        <ul>
-                            <li><strong>08h00-09h30 Apresentação:</strong> Gestão de Pessoas - Fernando</li>
-                            <li><strong>09h30-10h00:</strong> Coffe Break</li>
-                            <li><strong>10h00-12h00 Apresentação:</strong> Continuação de Gestão de Pessoas - Fernando</li>
-                            <li><strong>12h00-14h00:</strong> Almoço</li>
-                            <li><strong>14h00-15h00:</strong> Projetos para 2026</li>
-                            <li><strong>15h00-16h30:</strong> Elaboração de Perguntas</li>
-                            <li><strong>19h00-21h00:</strong> Jantar</li>
-                        </ul>
-                    </div>
-                    <div class="day hidden">
-                        <h3>(Dia 5) Sábado 06/12/2025</h3>
-                        <ul>
-                            <li><strong>Confraternização</strong></li>
-                        </ul>
-                    </div>
-
-                    <div class="day hidden">
-                        <h3>(Dia 6) Domingo 07/12/2025</h3>
-                        <ul>
-                            <li><strong>06h00-07h00:</strong> Café da Manhã</li>
-                            <li><strong>07h30</strong> Retorno da Equipe de Gestores para o Aeroporto</li>
-                        </ul>
-                    </div>
-
                 </div>
-            </section>
-        </main>
 
-        <footer class="hidden">
-            <div class="logo-conexao-container">
-                 <img src="assets/logo-conexao.png" alt="Logo Conexão Principal" class="logo-conexao">
+                <div class="schedule-content">
+                    <div id="painel-dia-1" class="day-content">
+                        <div class="event-card">
+                           <h3>Programação do Dia 05/10</h3>
+                           <p>Este é o conteúdo para o dia 5 de Outubro.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="painel-dia-2" class="day-content">
+                       <div class="event-card">
+                           <h3><i class="fa-solid fa-star"></i> Programação do Dia 06/10</h3>
+                           <p>Este é o conteúdo para o dia 6 de Outubro.</p>
+                        </div>
+                    </div>
+
+                     <div id="painel-dia-7" class="day-content">
+                        <div class="event-card">
+                           <h3>Programação do Dia 04/12</h3>
+                           <p>Este é o conteúdo para o dia 4 de Dezembro.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </footer>
-    </div>
+        </section>
 
+        <section id="informacoes" class="tab-content">
+             <div class="container">
+                 <h1>Sobre o OTC Capacita</h1>
+                 <div class="info-grid">
+                    <div class="info-card"><h3><i class="fa-solid fa-bullseye"></i> O Treinamento</h3><p>Uma imersão intensiva no epicentro da inovação tecnológica.</p></div>
+                    <div class="info-card"><h3><i class="fa-solid fa-users"></i> Palestrantes de Elite</h3><p>Aprenda com quem está definindo o futuro da indústria.</p></div>
+                    <div class="info-card"><h3><i class="fa-solid fa-ticket"></i> Garanta sua Vaga</h3><p>As vagas são limitadas para garantir uma experiência de alta qualidade.</p><button class="cta-button">Inscreva-se Agora</button></div>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="particles.js"></script>
     <script src="script.js"></script>
 </body>
-
 </html>
+
