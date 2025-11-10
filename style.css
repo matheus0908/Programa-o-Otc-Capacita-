@@ -31,7 +31,7 @@ body {
     pointer-events: none;
 }
 
-/* --- CABEÇALHO COM DESTAQUE --- */
+/* --- CABEÇALHO COM DESTAQUE (MODIFICADO) --- */
 header {
     background-color: rgba(13, 17, 23, 0.7);
     backdrop-filter: blur(12px);
@@ -44,11 +44,20 @@ header {
 
 .header-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Força o empilhamento */
     align-items: center;
+    gap: 15px; /* Espaço entre o topo e o menu de dias */
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 25px;
+}
+
+/* Novo container para o topo do header */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .logos {
@@ -59,6 +68,11 @@ header {
 
 .logo-principal { height: 50px; }
 .logo-treinamento { height: 80px; }
+
+nav {
+    display: flex;
+    justify-content: center;
+}
 
 nav .nav-button {
     background: transparent;
@@ -92,7 +106,7 @@ nav .nav-button.active::after { width: 60%; }
 
 /* --- CONTEÚDO PRINCIPAL E TÍTULOS --- */
 main {
-    padding-top: 130px;
+    padding-top: 240px; /* Aumentado para o header maior */
 }
 .container {
     max-width: 900px;
@@ -126,7 +140,7 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- CRONOGRAMA PROFISSIONAL (COM ROLAGEM HORIZONTAL) --- */
+/* --- CRONOGRAMA PROFISSIONAL (MODIFICADO) --- */
 .schedule-menu-wrapper {
     width: 100%;
     overflow: hidden;
@@ -135,7 +149,7 @@ h1 {
 .schedule-menu {
     display: flex;
     gap: 12px;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; (Removido, agora está no header) */
     padding-bottom: 15px;
     overflow-x: auto;
     white-space: nowrap;
@@ -143,7 +157,7 @@ h1 {
 }
 
 .schedule-menu::-webkit-scrollbar {
-    display: none; 
+    display: none;  
 }
 
 .day-tab {
@@ -173,42 +187,50 @@ h1 {
 }
 .day-tab.active span { color: #e0e0e0; }
 
-.day-content { display: none; }
-.day-content.active { display: block; }
-
-.event-card {
+/* .day-content agora é o CARD ÚNICO */
+.day-content {
+    display: none;
     background: linear-gradient(to right, #181d24, #12161c);
     border: 1px solid #30363d;
-    padding: 25px;
-    margin-bottom: 20px;
     border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px 10px 10px 0; /* Padding para os itens internos */
+    overflow: hidden; /* Para segurar os cantos arredondados */
+}
+.day-content.active {
+    display: block;
+}
+
+/* 1. Padding do item principal (um pouco menor) */
+.schedule-item {
+    padding: 6px 25px; /* Reduzido de 8px para 6px */
+    transition: background-color 0.3s ease;
     border-left: 4px solid #4285F4;
+    margin-left: 10px;
 }
 
-.event-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.event-card .time {
+/* 2. Margem de baixo do horário (bem pequena) */
+.schedule-item .time {
     font-size: 0.9em;
     font-weight: 600;
     color: #4285F4;
-    margin-bottom: 15px;
+    margin-bottom: 3px; /* Reduzido de 5px para 3px */
 }
-.event-card .time i { margin-right: 8px; }
 
-.event-card h3 { font-size: 1.4em; margin-bottom: 5px; color: #f0f6fc; }
-.event-card .speaker { color: #8b949e; margin-bottom: 10px; }
-.event-card p { line-height: 1.7; }
-
-.event-card.break {
-    background: #1c2128;
-    text-align: center;
-    border-left-color: #8b949e;
+/* 3. Margem de baixo do título (bem pequena) */
+.schedule-item h3 { 
+    font-size: 1.4em; 
+    color: #f0f6fc; 
+    margin-bottom: 3px; /* Reduzido de 5px para 3px */
 }
-.event-card.break h3, .event-card.break .time { color: #8b949e; }
+
+/* 4. Margens do palestrante (ZERADAS) */
+.schedule-item p.speaker {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #8b949e;
+    margin-top: 0; /* Removido espaço acima */
+    margin-bottom: 0; /* Removido espaço abaixo */
+}
 
 /* --- ABA MAIS INFORMAÇÕES (ESTILOS COMPLETOS) --- */
 .info-grid {
@@ -247,44 +269,71 @@ h1 {
     box-shadow: 0 5px 15px rgba(66, 133, 244, 0.4);
 }
 
-/* --- RESPONSIVIDADE --- */
+/* --- RESPONSIVIDADE (MODIFICADO) --- */
 @media (max-width: 765px) {
     header { padding: 15px 0; }
-    .header-container { flex-direction: column; gap: 20px; }
-    main { padding-top: 180px; }
+    
+    /* .header-container já é column, ajustamos o topo */
+    .header-top {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    main {
+        /* Aumenta o padding para o header que agora é bem maior no mobile */
+        padding-top: 320px; 
+    }
+    
     h1 { font-size: 2.5em; }
-}
-/* --- ADICIONAR ESTA REGRA NOVA --- */
-nav {
-    display: flex;
-    justify-content: center; /* Centraliza os botões */
-    width: 100%;
+    
+    /* Centraliza a navegação principal no mobile */
+    nav {
+        width: 100%;
+    }
+    nav .nav-button {
+        flex-grow: 1; /* Faz os botões ocuparem espaço */
+        text-align: center;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    nav .nav-button:first-child { margin-left: 0; }
+    nav .nav-button:last-child { margin-right: 0; }
 }
 
-/* --- ADICIONAR ESTE TRECHO NO FINAL DO SEU CSS --- */
-
-/* Estilos para os ícones dentro dos cards */
-.event-card h3 i,
-.event-card .time i,
-.event-card .speaker i {
+/* --- Estilos dos Ícones (Atualizado para schedule-item) --- */
+.schedule-item h3 i,
+.schedule-item .time i,
+.schedule-item .speaker i {
     color: #4285F4; /* Cor principal azulada */
     margin-right: 12px; /* Espaçamento à direita do ícone */
     width: 20px; /* Garante que os ícones alinhem verticalmente */
     text-align: center;
 }
 
-.event-card p.speaker {
+.schedule-item p.speaker {
     font-size: 0.9em;
     font-weight: 600;
     color: #8b949e;
-    margin-top: 10px;
+    margin-top: 2px; /* Margem reduzida */
 }
 
 /* Cor dos ícones de comida nos cards de intervalo */
-.event-card.break .time i,
-.event-card.break h3 i {
+.schedule-item.break .time i,
+.schedule-item.break h3 i {
     color: #8b949e;
 }
+
+/* Adicione isso ao final do seu CSS */
+
+.day-content {
+    /* Define uma altura máxima baseada na altura da tela (viewport) */
+    /* 60vh = 60% da altura da tela do dispositivo */
+    max-height: 60vh;
+    
+    /* Adiciona uma barra de rolagem interna APENAS se o conteúdo ultrapassar */
+    overflow-y: auto; 
+}
+
 
 
 
